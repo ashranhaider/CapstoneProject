@@ -14,5 +14,18 @@ Follow these instructions to build, run, and publish the project.
 
 To build the project, open a terminal and navigate to the project's root directory. Then run the following command:
 
-```sh
 dotnet build
+
+
+### Running the Project 
+
+To run the project, use the following command:
+
+dotnet run
+
+This will start the application, and you can access it in your web browser at http://localhost:5000 or https://localhost:5001.
+
+### Publishing the Project
+To publish the project, use the following command:
+
+dotnet publish -c Release -o ./publish
