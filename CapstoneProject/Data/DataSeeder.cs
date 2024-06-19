@@ -40,7 +40,8 @@ namespace CapstoneProject.Data
                     UserName = "admin@admin.com",
                     Email = "admin@example.com",
                     FirstName = "Admin",
-                    LastName = "User"
+                    LastName = "User",
+                    EmailConfirmed = true
                 };
 
                 await _userManager.CreateAsync(adminUser, "Abcd123?"); // Replace with a secure password
@@ -55,7 +56,8 @@ namespace CapstoneProject.Data
                     UserName = "employee@employee.com",
                     Email = "employee@example.com",
                     FirstName = "Employee",
-                    LastName = "User"
+                    LastName = "User",
+                    EmailConfirmed = true
                 };
 
                 await _userManager.CreateAsync(employeeUser, "Abcd123?"); // Replace with a secure password
