@@ -1,6 +1,8 @@
 using CapstoneProject.Data;
+using CapstoneProject.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,16 +11,34 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
-var app = builder.Build();
+//builder.Services.AddIdentity<AppUser, AppRole>(options =>
+//{
+//    options.User.RequireUniqueEmail = true;
+//}).AddEntityFrameworkStores<ApplicationDbContext>();
 
+
+builder.Services.AddDefaultIdentity<AppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<AppRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+
+    // Retrieve the RoleManager instance.
+    using (var scope = app.Services.CreateScope())
+    {
+        var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<AppRole>>();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<AppUser>>();
+
+        var seeder = new DataSeeder(userManager, roleManager);
+        await seeder.SeedAsync();
+    }
+
 }
 else
 {
