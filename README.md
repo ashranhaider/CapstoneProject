@@ -23,7 +23,7 @@ To run the project, use the following command:
 
 dotnet run
 
-This will start the application, and you can access it in your web browser at http://localhost:5000 or https://localhost:5001.
+This will start the application, and you can access it in your web browser
 
 ### Publishing the Project
 To publish the project, use the following command:
